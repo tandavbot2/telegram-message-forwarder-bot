@@ -80,13 +80,28 @@ logging.basicConfig(
 )
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
-config_content = os.getenv('CONFIG')
+
+config_content = os.getenv('CONFIG_CONTENT')
 if config_content:
-    config = toml.loads(config_content)
-    logging.info(f"Loaded config from environment variable")
+    logging.info(f"CONFIG_CONTENT: {config_content}")
+    try:
+        config = toml.loads(config_content)
+        logging.info(f"Loaded config from environment variable")
+    except toml.decoder.TomlDecodeError as e:
+        logging.error(f"Error decoding TOML config: {e}")
+        sys.exit(1)
 else:
-    logging.error(f"CONFIG environment variable not found. Exiting...")
+    logging.error(f"CONFIG_CONTENT environment variable not found. Exiting...")
     sys.exit(1)
+
+
+# config_content = os.getenv('CONFIG')
+# if config_content:
+#     config = toml.loads(config_content)
+#     logging.info(f"Loaded config from environment variable")
+# else:
+#     logging.error(f"CONFIG environment variable not found. Exiting...")
+#     sys.exit(1)
 
 try:
     validate_config(config)
