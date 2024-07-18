@@ -1,0 +1,27 @@
+export CONFIG_CONTENT=$(cat <<EOF
+[pyrogram]
+api_id = 12345
+api_hash = "0123456789abcdef0123456789abcdef"
+bot_token = "123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
+session_string = "1BVn1-ABCD1234efgh5678IJKLmnoPQRsTUVwxyZxxxxxxxx"
+sudo_users = [123456789, 123456789]
+
+[[chats]]
+from = -100123456789
+to = 123456789
+replace = { "old" = "new" }
+
+[[chats]]
+from = [123456789, -100123456789]
+to = 123456789
+replace = { "only_apply_to_this_chat" = "new" }
+
+[[chats]]
+from = -100123456789
+to = [123456789, -100123456789]
+
+[[chats]]
+from = [123456789, -100123456789]
+to = [123456789, -100123456789]
+EOF
+)
